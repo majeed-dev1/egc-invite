@@ -16,6 +16,13 @@
   --body: "IBM Plex Sans Arabic", Tahoma, Arial, sans-serif;
 }
 
+/* ===== خط آمن =====
+   fonts.js يضيف safe-font عندما لا يوصل متصفح الزائر حروف خط البكسل.
+   يُستخدم خط الفقرات بدله، و font-size-adjust يصغّره ليقارب مقاس Handjet فلا تنكسر المقاسات. */
+html.safe-font { --display: var(--body); }
+html.safe-font body { font-size-adjust: .41; }
+html.safe-font .lead, html.safe-font .note, html.safe-font code { font-size-adjust: none; }
+
 /* ===== الأساس ===== */
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
