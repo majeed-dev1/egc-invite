@@ -3,6 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    // الدعوة تُفتح فقط برابط فيه ‎?to=‎ (ولو فارغاً). عنوان الموقع بدونه يذهب لصفحة إنشاء الروابط.
+    if (!new URLSearchParams(location.search).has("to") && location.hash !== "#confirmed") location.replace("links.html");
+  </script>
   <title>نادي الألعاب الإلكترونية | من لاعب إلى صانع ألعاب</title>
   <meta name="description" content="دعوة من نادي الألعاب الإلكترونية لورشة «من لاعب إلى صانع ألعاب»: الأحد ٢٩ نوفمبر، ١١ ص – ٤ م، مسرح وادي مكة.">
   <meta name="theme-color" content="#03252f">

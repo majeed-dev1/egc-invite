@@ -51,6 +51,7 @@
     }
     .field::placeholder { color: #6fa9a8; }
     .entry .btn { flex: 0 0 auto; }
+    .generic { margin: -6px 0 0; text-align: start; }
 
     .note { --frame: var(--gold-shade); padding: 10px 14px; color: #ffe9a8; font-size: 15px; line-height: 1.6; text-align: start; }
 
@@ -85,6 +86,8 @@
       </div>
     </form>
 
+    <p class="generic"><a id="generic" class="link" target="_blank" rel="noopener">دعوة عامة بدون اسم</a></p>
+
     <p id="localNote" class="note" hidden>
       تفتح الصفحة الآن من جهازك، فهذه الروابط تعمل على جهازك فقط.
       بعد نشر الموقع افتح هذه الصفحة من رابط الموقع لتحصل على روابط تعمل عند الجميع.
@@ -113,6 +116,9 @@
 
     const el = id => document.getElementById(id);
     const form = el("form"), input = el("name"), list = el("list"), results = el("results"), statusLine = el("status");
+
+    // ‎?to=‎ فارغ يفتح الدعوة بلا اسم؛ بدون ‎?to=‎ إطلاقاً يعود الموقع إلى هذه الصفحة.
+    el("generic").href = inviteUrl("");
 
     const local = location.protocol === "file:" || ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
     el("localNote").hidden = !local;
