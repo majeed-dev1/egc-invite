@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#03252f">
+  <title>روابط الدعوات | نادي الألعاب الإلكترونية</title>
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Handjet:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400&display=swap">
+  <!-- الألوان والخطوط والأزرار مشتركة مع صفحة الدعوة -->
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { padding: 28px max(16px, env(safe-area-inset-right)) 48px max(16px, env(safe-area-inset-left)); }
+    .maker { width: min(100%, 640px); margin: 0 auto; display: grid; gap: 16px; text-align: center; }
+    .maker .kicker { justify-content: center; margin: 0; }
+    .maker h1 {
+      margin: 0;
+      font: 700 clamp(42px, 11vw, 72px)/1.1 var(--display);
+      text-shadow: 0 var(--px) 0 #0c6c78, var(--px) calc(2 * var(--px)) 0 var(--night);
+    }
+    .maker .lead { margin: 0; }
+
+    /* نفس إطار البكسل المستخدم في صفحة الدعوة */
+    .field, .note, #list li {
+      --frame: var(--line);
+      margin: var(--px);
+      background: var(--deep);
+      box-shadow:
+        0 calc(-1 * var(--px)) 0 var(--frame),
+        0 var(--px) 0 var(--frame),
+        calc(-1 * var(--px)) 0 0 var(--frame),
+        var(--px) 0 0 var(--frame);
+    }
+
+    form { display: grid; gap: 8px; margin-top: 6px; text-align: start; }
+    label { color: var(--mint); font: 700 23px/1.1 var(--display); }
+    .entry { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+    .field {
+      flex: 1 1 240px;
+      min-width: 0;
+      min-height: 58px;
+      padding: 0 14px 4px;
+      border: 0;
+      border-radius: 0;
+      color: var(--foam);
+      font: 500 27px/1 var(--display);
+    }
+    .field::placeholder { color: #6fa9a8; }
+    .entry .btn { flex: 0 0 auto; }
+
+    .note { --frame: var(--gold-shade); padding: 10px 14px; color: #ffe9a8; font-size: 15px; line-height: 1.6; text-align: start; }
+
+    .list-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; margin-top: 10px; }
+    .list-head h2 { margin: 0; font: 700 30px/1.1 var(--display); }
+    #list { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; text-align: start; }
+    #list li { display: grid; gap: 6px; padding: 12px 14px 8px; }
+    #list strong { color: var(--gold); font: 700 28px/1.1 var(--display); overflow-wrap: anywhere; }
+    #list code {
+      direction: ltr;
+      text-align: left;
+      color: var(--mute);
+      font: 13px/1.5 ui-monospace, Consolas, monospace;
+      overflow-wrap: anywhere;
+      user-select: all;
+    }
+    .row-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 10px; margin-top: 2px; }
+    .btn-small { min-height: 44px; padding: 2px 18px 8px; font-size: 23px; }
+  </style>
+</head>
+<body>
+  <main class="maker">
+    <p class="kicker"><i class="dot"></i><span>نادي الألعاب الإلكترونية</span></p>
+    <h1>روابط الدعوات</h1>
+    <p class="lead">اكتب اسم المدعو واضغط «إتمام»، فيظهر رابط دعوة خاص باسمه.</p>
+
+    <form id="form">
+      <label for="name">اسم المدعو</label>
+      <div class="entry">
+        <input id="name" class="field" type="text" maxlength="80" autocomplete="off" placeholder="اكتب الاسم هنا" required>
+        <button class="btn btn-gold" type="submit">إتمام</button>
+      </div>
+    </form>
+
+    <p id="localNote" class="note" hidden>
+      تفتح الصفحة الآن من جهازك، فهذه الروابط تعمل على جهازك فقط.
+      بعد نشر الموقع افتح هذه الصفحة من رابط الموقع لتحصل على روابط تعمل عند الجميع.
+    </p>
+
+    <section id="results" hidden>
+      <div class="list-head">
+        <h2>الروابط</h2>
+        <div class="row-actions">
+          <button id="copyAll" class="link" type="button">نسخ الكل</button>
+          <button id="clear" class="link" type="button">مسح القائمة</button>
+        </div>
+      </div>
+      <ul id="list"></ul>
+    </section>
+
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+
+  <script>
+    "use strict";
+    // مولّد روابط الدعوة: يبني الرابط من عنوان هذه الصفحة نفسها، فيعمل تلقائياً بعد نشر الموقع.
+    const STORE = "invite-names";   // الأسماء تُحفظ في متصفح هذا الجهاز فقط
+    const MAX_NAME = 80;            // نفس الحد في game.js
+    const MESSAGE = "في دعوة لك من نادي الألعاب الإلكترونية:";
+
+    const el = id => document.getElementById(id);
+    const form = el("form"), input = el("name"), list = el("list"), results = el("results"), statusLine = el("status");
+
+    const local = location.protocol === "file:" || ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
+    el("localNote").hidden = !local;
+
+    let names = [];
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORE) || "[]");
+      if (Array.isArray(saved)) names = saved.filter(name => typeof name === "string" && name);
+    } catch (error) {
+      // بدون تخزين: القائمة تعمل لهذه الزيارة فقط.
+    }
+
+    function save() {
+      try { localStorage.setItem(STORE, JSON.stringify(names)); } catch (error) {}
+    }
+
+    function inviteUrl(name) {
+      const url = new URL(location.protocol === "file:" ? "index.html" : "./", location.href);
+      url.search = "";
+      url.hash = "";
+      url.searchParams.set("to", name);
+      return url.href;
+    }
+
+    async function copy(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (error) {
+        // بديل للمتصفحات أو السياقات التي تمنع الحافظة (مثل فتح الملف مباشرة).
+        const area = document.createElement("textarea");
+        area.value = text;
+        area.style.cssText = "position:fixed;opacity:0";
+        document.body.append(area);
+        area.select();
+        let done = false;
+        try { done = document.execCommand("copy"); } catch (error2) {}
+        area.remove();
+        return done;
+      }
+    }
+
+    function node(tag, className, text) {
+      const element = document.createElement(tag);
+      if (className) element.className = className;
+      if (text) element.textContent = text;
+      return element;
+    }
+
+    async function copyWithFeedback(button, text, message) {
+      const label = button.textContent;
+      const done = await copy(text);
+      button.textContent = done ? "تم النسخ" : "تعذّر النسخ";
+      statusLine.textContent = done ? message : "تعذّر النسخ. انسخ الرابط يدوياً.";
+      setTimeout(() => { button.textContent = label; }, 1500);
+    }
+
+    function render() {
+      list.replaceChildren(...names.map(name => {
+        const url = inviteUrl(name);
+        const item = node("li");
+        const actions = node("div", "row-actions");
+
+        const copyButton = node("button", "btn btn-small", "نسخ الرابط");
+        copyButton.type = "button";
+        copyButton.onclick = () => copyWithFeedback(copyButton, url, "تم نسخ رابط " + name);
+
+        const open = node("a", "link", "فتح الدعوة");
+        open.href = url;
+        open.target = "_blank";
+        open.rel = "noopener";
+
+        const share = node("a", "link", "إرسال واتساب");
+        share.href = "https://wa.me/?text=" + encodeURIComponent(MESSAGE + "\n" + url);
+        share.target = "_blank";
+        share.rel = "noopener";
+
+        const remove = node("button", "link", "حذف");
+        remove.type = "button";
+        remove.onclick = () => {
+          names = names.filter(other => other !== name);
+          save();
+          render();
+        };
+
+        actions.append(copyButton, open, share, remove);
+        item.append(node("strong", "", name), node("code", "", url), actions);
+        return item;
+      }));
+      results.hidden = !names.length;
+    }
+
+    form.onsubmit = event => {
+      event.preventDefault();
+      const name = Array.from(input.value.trim()).slice(0, MAX_NAME).join("");
+      if (!name) return;
+      // الاسم المكرر يُنقل لأعلى القائمة بدل تكراره.
+      names = [name, ...names.filter(other => other !== name)];
+      save();
+      render();
+      statusLine.textContent = "تم إنشاء رابط الدعوة لـ " + name;
+      input.value = "";
+      input.focus();
+    };
+
+    el("copyAll").onclick = event => {
+      const lines = names.map(name => name + "\n" + inviteUrl(name)).join("\n\n");
+      copyWithFeedback(event.currentTarget, lines, "تم نسخ كل الروابط");
+    };
+
+    el("clear").onclick = () => {
+      if (!confirm("مسح كل الأسماء من القائمة؟")) return;
+      names = [];
+      save();
+      render();
+      input.focus();
+    };
+
+    render();
+  </script>
+</body>
+</html>

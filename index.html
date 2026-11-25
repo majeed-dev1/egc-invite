@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>نادي الألعاب الإلكترونية | من لاعب إلى صانع ألعاب</title>
+  <meta name="description" content="دعوة من نادي الألعاب الإلكترونية لورشة «من لاعب إلى صانع ألعاب»: الأحد ٢٩ نوفمبر، ١١ ص – ٤ م، مسرح وادي مكة.">
+  <meta name="theme-color" content="#03252f">
+
+  <!-- معاينة الرابط عند مشاركته (واتساب، تويتر...) -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ar_SA">
+  <meta property="og:site_name" content="نادي الألعاب الإلكترونية">
+  <meta property="og:title" content="في دعوة لك من نادي الألعاب الإلكترونية">
+  <meta property="og:description" content="ورشة «من لاعب إلى صانع ألعاب» · الأحد ٢٩ نوفمبر · ١١ ص – ٤ م · مسرح وادي مكة">
+  <!-- بعد النشر أضف صورة المعاينة برابط كامل، مثال:
+       <meta property="og:image" content="https://example.com/preview.png"> -->
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Handjet:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="game.js"></script>
+</head>
+<body>
+  <!-- أيقونات البكسل المشتركة -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-crown" viewBox="0 0 16 16"><path d="M2 5h3v4H2zM7 3h3v6H7zM12 5h3v4h-3zM3 8h11v4H3z"/><path d="M3 12h11v2H3z" opacity=".55"/></symbol>
+      <symbol id="i-date" viewBox="0 0 12 12"><path fill-rule="evenodd" d="M1 2h10v9H1zM2 5h8v5H2zM3 6h2v1H3zM6 6h2v1H6zM3 8h2v1H3zM6 8h2v1H6zM3 0h1v2H3zM8 0h1v2H8z"/></symbol>
+      <symbol id="i-time" viewBox="0 0 12 12"><path fill-rule="evenodd" d="M4 1h4v1h2v2h1v4h-1v2H8v1H4v-1H2V8H1V4h1V2h2zM6 3h1v3h2v1H6z"/></symbol>
+      <symbol id="i-place" viewBox="0 0 12 12"><path fill-rule="evenodd" d="M4 0h4v1h1v1h1v4H9v2H8v2H7v2H5v-2H4V8H3V6H2V2h1V1h1zM5 3h2v2H5z"/></symbol>
+      <symbol id="i-check" viewBox="0 0 12 12"><path d="M1 6h2v2H1zM3 8h2v2H3zM5 6h2v2H5zM7 4h2v2H7zM9 2h2v2H9z"/></symbol>
+      <symbol id="i-up" viewBox="0 0 12 12"><path d="M5 1h2v1h1v1h1v1h1v2H8v5H4V6H2V4h1V3h1V2h1z"/></symbol>
+    </defs>
+  </svg>
+
+  <header id="header">
+    <strong class="brand">
+      <svg class="ico" aria-hidden="true"><use href="#i-crown"/></svg>
+      نادي الألعاب الإلكترونية
+    </strong>
+    <div class="tools">
+      <button id="mute" class="tool" type="button" aria-pressed="false" aria-label="كتم الصوت">
+        <svg class="ico" viewBox="0 0 12 12" aria-hidden="true">
+          <path d="M1 4h3v4H1zM4 3h1v6H4zM5 2h1v8H5zM6 1h1v10H6z"/>
+          <path class="waves" d="M8 4h1v4H8zM10 2h1v8h-1z"/>
+          <path class="cross" d="M8 4h1v1H8zM10 4h1v1h-1zM9 5h1v2H9zM8 7h1v1H8zM10 7h1v1h-1z"/>
+        </svg>
+      </button>
+      <button id="fullscreen" class="tool" type="button" aria-pressed="false" aria-label="ملء الشاشة" hidden>
+        <svg class="ico" viewBox="0 0 12 12" aria-hidden="true">
+          <path d="M1 1h4v1H2v3H1zM7 1h4v4h-1V2H7zM1 7h1v3h3v1H1zM10 7h1v4H7v-1h3z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="sky" id="sky" data-phase="start" aria-label="دعوة نادي الألعاب الإلكترونية">
+      <canvas id="space" role="img" aria-label="شخصية بكسل سوداء تقفز على منصات نحو تاج، وفوقها مركبة فضائية"></canvas>
+
+      <!-- شاشة البداية -->
+      <div class="title" id="title">
+        <p class="tag" data-guest="إلى {name}" data-guest-only></p>
+        <h1 id="heading">في دعوة لك</h1>
+        <p class="sub">من نادي الألعاب الإلكترونية</p>
+      </div>
+
+      <!-- منصة التحكم: نفس مكان الزر في البداية وأثناء القفز -->
+      <div class="dock" id="dock">
+        <p class="progress">
+          <span class="pips" id="pips" aria-hidden="true"></span>
+          <span id="hint" role="status"></span>
+        </p>
+        <button id="action" class="btn" type="button">
+          <span id="actionLabel">ابدأ</span>
+          <svg class="ico" aria-hidden="true"><use href="#i-up"/></svg>
+        </button>
+        <p class="keys">أو اضغط <kbd>المسافة</kbd></p>
+      </div>
+
+      <!-- الدعوة -->
+      <div class="screen pending" id="transmission">
+        <div class="inner">
+          <div class="porthole" aria-hidden="true"></div>
+          <div class="copy" id="message">
+            <p class="kicker"><i class="dot"></i><span>إشارة واردة من <span data-event="host"></span></span></p>
+            <h2>خطفناك<span id="who" data-guest=" يا {name}"></span>!</h2>
+            <p class="lead">
+              مهمتك الجاية: اصنع لعبتك في ٦٠ دقيقة<br>
+              في <span data-event="title"></span>.
+            </p>
+            <ul class="facts">
+              <li>
+                <svg class="ico" aria-hidden="true"><use href="#i-date"/></svg>
+                <strong data-event="date"></strong>
+                <span data-event="day"></span>
+              </li>
+              <li>
+                <svg class="ico" aria-hidden="true"><use href="#i-time"/></svg>
+                <strong data-event="time"></strong>
+                <span>الوقت</span>
+              </li>
+              <li>
+                <svg class="ico" aria-hidden="true"><use href="#i-place"/></svg>
+                <strong data-event="place"></strong>
+                <span>المكان</span>
+              </li>
+            </ul>
+            <button id="accept" class="btn btn-gold" type="button">أقبل الدعوة</button>
+            <button id="replay" class="link" type="button">إعادة العرض</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- تأكيد الحضور -->
+      <div class="screen pending" id="confirmed">
+        <div class="inner">
+          <div class="porthole" aria-hidden="true"></div>
+          <div class="copy">
+            <h2 id="confirmTitle" tabindex="-1">
+              <span class="stamp"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>
+              تم تأكيد حضورك
+            </h2>
+            <p class="lead">نشوفك<span data-guest=" يا {name}"></span> في الورشة!<span id="registerNote" hidden> باقي خطوة واحدة: سجّل بياناتك في النموذج.</span></p>
+
+            <article class="ticket" aria-label="بطاقة الدعوة">
+              <div class="ticket-head">
+                <svg class="ico" aria-hidden="true"><use href="#i-crown"/></svg>
+                <div>
+                  <small>بطاقة دعوة</small>
+                  <strong data-event="title"></strong>
+                </div>
+              </div>
+              <dl>
+                <div data-guest-only><dt>الضيف</dt><dd data-guest="{name}"></dd></div>
+                <div><dt>المكان</dt><dd data-event="place"></dd></div>
+                <div><dt>التاريخ</dt><dd data-event="fullDate"></dd></div>
+                <div><dt>الوقت</dt><dd data-event="time"></dd></div>
+              </dl>
+              <div class="ticket-stub">
+                <span data-event="host"></span>
+                <i aria-hidden="true"></i>
+              </div>
+            </article>
+
+            <div class="actions">
+              <div class="buttons">
+                <a id="register" class="btn btn-gold" target="_blank" rel="noopener" hidden>سجّل في الورشة</a>
+                <button id="calendar" class="btn" type="button">
+                  <svg class="ico" aria-hidden="true"><use href="#i-date"/></svg>
+                  أضف إلى التقويم
+                </button>
+              </div>
+              <p class="links">
+                <a id="gcal" class="link" target="_blank" rel="noopener">تقويم Google</a>
+                <a id="map" class="link" target="_blank" rel="noopener" hidden>الموقع على الخريطة</a>
+                <button id="back" class="link" type="button">رجوع للدعوة</button>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p id="announce" class="sr-only" role="status"></p>
+    </section>
+  </main>
+</body>
+</html>
