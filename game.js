@@ -10,10 +10,10 @@ const EVENT = {
   host: "نادي الألعاب الإلكترونية",
   day: "الأحد",
   date: "٢٩ نوفمبر",
-  time: "١١ ص – ٤ م",
+  time: "١٢ – ٣ م",
   place: "مسرح وادي مكة",
-  start: "2026-11-29T11:00:00+03:00",
-  end: "2026-11-29T16:00:00+03:00",
+  start: "2026-11-29T12:00:00+03:00",
+  end: "2026-11-29T15:00:00+03:00",
   mapUrl: "",       // رابط الموقع على الخريطة (اختياري)، يُظهر رابط «الموقع على الخريطة»
   // رابط نموذج التسجيل: يظهر زر «سجّل في الورشة» في صفحة التأكيد. {name} إن وُجد يُستبدل باسم المدعو.
   registerUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdyVBMw_6b5Y3sOmR5hqfQ-wY3HZMc89zcibjzOiZB4ygaNHw/viewform?usp=publish-editor",
@@ -33,12 +33,13 @@ const el = id => document.getElementById(id);
 const sky = el("sky"), canvas = el("space"), ctx = canvas.getContext("2d");
 const header = el("header"), dock = el("dock");
 const action = el("action"), actionLabel = el("actionLabel"), hint = el("hint"), pipsBox = el("pips");
-const transmission = el("transmission"), confirmed = el("confirmed");
+const transmission = el("transmission"), confirmed = el("confirmation");
 const accept = el("accept"), replayButton = el("replay"), announce = el("announce");
 const confirmTitle = el("confirmTitle"), calendarButton = el("calendar");
 const googleLink = el("gcal"), mapLink = el("map"), backButton = el("back");
 const muteButton = el("mute"), fullscreenButton = el("fullscreen");
 const startLabel = actionLabel.textContent;
+// لا يطابق id أي عنصر عمداً: لو طابق لمرّر المتصفح الصفحة نحو العنصر عند فتح الرابط وأزاح المشهد.
 const CONFIRMED_HASH = "#confirmed";
 
 /* ---------- المدعو: index.html?to=الاسم ---------- */

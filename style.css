@@ -163,6 +163,7 @@ header {
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
+  overflow: clip;   /* clip يمنع أي تمرير داخلي يزيح المشهد عن مكانه */
 }
 
 #space {
@@ -355,8 +356,8 @@ header {
 #accept { width: min(100% - 2 * var(--px), 360px); min-height: 66px; font-size: 34px; }
 
 /* ===== تأكيد الحضور ===== */
-#confirmed .porthole { margin-block: calc(var(--art, 2px) * 9) calc(var(--art, 2px) * 8); }
-#confirmed h2 {
+#confirmation .porthole { margin-block: calc(var(--art, 2px) * 9) calc(var(--art, 2px) * 8); }
+#confirmation h2 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -471,7 +472,7 @@ header {
   .copy { gap: 15px; }
   .kicker { font-size: 25px; }
   .screen h2 { font-size: 94px; }
-  #confirmed h2 { font-size: 78px; }
+  #confirmation h2 { font-size: 78px; }
   .lead { font-size: 21px; }
   .facts .ico { font-size: 32px; }
   .facts strong { font-size: 31px; }
@@ -532,10 +533,10 @@ header {
     align-items: center;
     gap: 22px;
   }
-  .porthole, #confirmed .porthole { margin: calc(var(--art, 2px) * 8); }
+  .porthole, #confirmation .porthole { margin: calc(var(--art, 2px) * 8); }
   .copy { gap: 7px; margin-top: 0; }
   .screen h2 { font-size: 34px; }
-  #confirmed h2 { font-size: 30px; }
+  #confirmation h2 { font-size: 30px; }
   .kicker { font-size: 16px; }
   .lead { font-size: 14px; line-height: 1.4; }
   .facts li { padding: 6px 4px 5px; }
@@ -546,7 +547,7 @@ header {
   .buttons { margin-top: 2px; }
   .buttons .btn { flex-basis: 190px; min-height: 46px; font-size: 24px; }
   /* التأكيد في ارتفاع قصير: بلا ذيل التذكرة ولا السطر التمهيدي */
-  #confirmed .lead, .ticket-stub { display: none; }
+  #confirmation .lead, .ticket-stub { display: none; }
   .ticket-head { padding: 5px 12px 7px; }
   .ticket-head .ico { font-size: 26px; }
   .ticket-head strong { font-size: 21px; }
