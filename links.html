@@ -12,8 +12,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Handjet:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;700&display=swap">
   <!-- الألوان والخطوط والأزرار مشتركة مع صفحة الدعوة -->
-  <link rel="stylesheet" href="style.css?v=5">
-  <script src="fonts.js?v=5"></script>
+  <link rel="stylesheet" href="style.css?v=6">
+  <script src="fonts.js?v=6"></script>
   <style>
     body { padding: 28px max(16px, env(safe-area-inset-right)) 48px max(16px, env(safe-area-inset-left)); }
     .maker { width: min(100%, 640px); margin: 0 auto; display: grid; gap: 16px; text-align: center; }
@@ -54,13 +54,13 @@
     .entry .btn { flex: 0 0 auto; }
     .generic { margin: -6px 0 0; text-align: start; }
 
-    .note { --frame: var(--gold-shade); padding: 10px 14px; color: #ffe9a8; font-size: 15px; line-height: 1.6; text-align: start; }
+    .note { --frame: var(--mint-shade); padding: 10px 14px; color: var(--mint); font-size: 15px; line-height: 1.6; text-align: start; }
 
     .list-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; margin-top: 10px; }
     .list-head h2 { margin: 0; font: 700 30px/1.1 var(--display); }
     #list { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; text-align: start; }
     #list li { display: grid; gap: 6px; padding: 12px 14px 8px; }
-    #list strong { color: var(--gold); font: 700 28px/1.1 var(--display); overflow-wrap: anywhere; }
+    #list strong { color: var(--mint); font: 700 28px/1.1 var(--display); overflow-wrap: anywhere; }
     #list code {
       direction: ltr;
       text-align: left;
@@ -83,7 +83,7 @@
       <label for="name">اسم المدعو</label>
       <div class="entry">
         <input id="name" class="field" type="text" maxlength="80" autocomplete="off" placeholder="اكتب الاسم هنا" required>
-        <button class="btn btn-gold" type="submit">إتمام</button>
+        <button class="btn" type="submit">إتمام</button>
       </div>
     </form>
 

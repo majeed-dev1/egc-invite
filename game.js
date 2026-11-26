@@ -145,7 +145,7 @@ const STARS = Array.from({ length: 100 }, (_, i) => ({
   y: (Math.sin(i * 9.73 + 2) * .5 + .5) * .77,
 }));
 const noise = (i, seed) => { const v = Math.sin(i * seed) * 43758.5453; return v - Math.floor(v); };
-const CONFETTI_COLORS = ["#ffcf52", "#bdf6e8", "#edfff9", "#16949f", "#ffe9a8"];
+const CONFETTI_COLORS = ["#bdf6e8", "#edfff9", "#1a9aa6", "#7bd3df", "#75ada7"];
 const CONFETTI = Array.from({ length: 90 }, (_, i) => ({
   x: noise(i + 1, 12.9898),
   delay: noise(i + 1, 78.233) * .7,
@@ -418,12 +418,12 @@ function drawShip({ shipX, shipY, focusY, sealed, ease }) {
 }
 
 function drawCrown(x, base) {
-  const gold = "#ffcf52";
-  box(x + 1, base - 9, 3, 4, gold);
-  box(x + 7, base - 11, 3, 6, gold);
-  box(x + 13, base - 9, 3, 4, gold);
-  box(x + 2, base - 6, 13, 4, gold);
-  box(x + 2, base - 2, 13, 2, "#ae701e");
+  const mint = "#bdf6e8";
+  box(x + 1, base - 9, 3, 4, mint);
+  box(x + 7, base - 11, 3, 6, mint);
+  box(x + 13, base - 9, 3, 4, mint);
+  box(x + 2, base - 6, 13, 4, mint);
+  box(x + 2, base - 2, 13, 2, "#75ada7");
   box(x + 7, base - 5, 3, 2, "#087788");
 }
 
@@ -494,7 +494,7 @@ function drawIris({ w, h, shipX, focusY, cameraX, cameraY, ease }, now) {
   ctx.restore();
 }
 
-// احتفال التأكيد: حلقة ذهبية، بريق يدور، التاج يهبط على رأس الشخصية، وقصاصات تتساقط.
+// احتفال التأكيد: حلقة مضيئة، بريق يدور، التاج يهبط على رأس الشخصية، وقصاصات تتساقط.
 function drawCelebration({ w, h, shipX, shipY, focusY, cameraX, cameraY, swap }, now) {
   if (swap <= 0) return;
   const centerX = Math.round(shipX) + cameraX, centerY = Math.round(focusY) + cameraY;
@@ -503,17 +503,17 @@ function drawCelebration({ w, h, shipX, shipY, focusY, cameraX, cameraY, swap },
   ctx.globalAlpha = swap;
   for (let i = 0; i < 190; i++) {
     const angle = i / 190 * Math.PI * 2;
-    box(centerX + Math.cos(angle) * 28.5 - .5, centerY + Math.sin(angle) * 28.5 - .5, 2, 2, "#ffcf52");
+    box(centerX + Math.cos(angle) * 28.5 - .5, centerY + Math.sin(angle) * 28.5 - .5, 2, 2, "#bdf6e8");
   }
   for (let i = 0; i < 6; i++) {
     const angle = i * Math.PI / 3 + (reduce ? .4 : now / 2600);
     const x = centerX + Math.cos(angle) * (36 + i % 2 * 4), y = centerY + Math.sin(angle) * (36 + i % 2 * 4);
     const twinkle = reduce ? 1 : .5 + .5 * Math.sin(now / 280 + i * 2.1);
     ctx.globalAlpha = swap * (.35 + .65 * twinkle);
-    box(x, y, 1, 1, "#fff3c4");
+    box(x, y, 1, 1, "#edfff9");
     if (twinkle > .55) {
-      box(x - 1, y, 3, 1, "#ffcf52");
-      box(x, y - 1, 1, 3, "#ffcf52");
+      box(x - 1, y, 3, 1, "#bdf6e8");
+      box(x, y - 1, 1, 3, "#bdf6e8");
     }
   }
   ctx.globalAlpha = 1;
