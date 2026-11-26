@@ -8,8 +8,9 @@
   --mint-shade: #75ada7;
   --foam: #edfff9;        /* نص فاتح */
   --mute: #a9d6d2;        /* نص ثانوي */
-  --aqua: #1a9aa6;        /* اللون الثاني: يميّز زر التقويم عن زر التسجيل */
-  --aqua-shade: #0c6c78;
+  --white: #ffffff;       /* اللون الثاني: يميّز زر التقويم عن زر التسجيل */
+  --white-shade: #b3c9c6;
+  --gold: #ffcf52;        /* للتاج فقط */
   --px: 4px;              /* وحدة البكسل للإطارات والظلال */
   --header-h: 64px;
   --display: "Handjet", Tahoma, Arial, sans-serif;
@@ -92,7 +93,7 @@ a { color: inherit; }
 .btn[aria-disabled="true"] { filter: saturate(.6) brightness(.86); cursor: default; }
 .btn .ico { font-size: .8em; }
 
-.btn-alt { --face: var(--aqua); --shade: var(--aqua-shade); }
+.btn-alt { --face: var(--white); --shade: var(--white-shade); }
 
 .link {
   display: inline-flex;
@@ -138,7 +139,7 @@ header {
   font: 700 clamp(19px, 5.2vw, 24px)/1 var(--display);
   text-shadow: 0 2px 0 var(--night);
 }
-.brand .ico { color: var(--mint); font-size: 1.15em; }
+.brand .ico { color: var(--gold); font-size: 1.15em; }
 
 .tools { display: flex; gap: calc(var(--px) + 6px); }
 .tool {
@@ -404,7 +405,7 @@ header {
   background: var(--deep);
   color: var(--foam);
 }
-.ticket-head .ico { color: var(--mint); font-size: 36px; }
+.ticket-head .ico { color: var(--gold); font-size: 36px; }
 .ticket-head small { display: block; color: var(--mint); font: 500 17px/1 var(--display); }
 .ticket-head strong { display: block; font: 700 clamp(21px, 5.6vw, 27px)/1.05 var(--display); }
 

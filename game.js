@@ -418,12 +418,12 @@ function drawShip({ shipX, shipY, focusY, sealed, ease }) {
 }
 
 function drawCrown(x, base) {
-  const mint = "#bdf6e8";
-  box(x + 1, base - 9, 3, 4, mint);
-  box(x + 7, base - 11, 3, 6, mint);
-  box(x + 13, base - 9, 3, 4, mint);
-  box(x + 2, base - 6, 13, 4, mint);
-  box(x + 2, base - 2, 13, 2, "#75ada7");
+  const gold = "#ffcf52";   // التاج يبقى ذهبياً بطلب صاحب المشروع
+  box(x + 1, base - 9, 3, 4, gold);
+  box(x + 7, base - 11, 3, 6, gold);
+  box(x + 13, base - 9, 3, 4, gold);
+  box(x + 2, base - 6, 13, 4, gold);
+  box(x + 2, base - 2, 13, 2, "#ae701e");
   box(x + 7, base - 5, 3, 2, "#087788");
 }
 
